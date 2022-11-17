@@ -5,13 +5,15 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "Citys")
 public class CityEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
+
     @Column
-    private String name;
+    private String cityName;
     @Column
     private double latitude;
     @Column
@@ -25,12 +27,12 @@ public class CityEntity {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getCityName() {
+        return cityName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
     }
 
     public double getLatitude() {
