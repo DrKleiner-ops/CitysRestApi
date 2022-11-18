@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/citys")
+@RequestMapping("/suggestions")
 public class CityController {
 
     @Autowired
@@ -29,9 +29,9 @@ public class CityController {
         }
     }
     @GetMapping
-    public ResponseEntity getCitys(@RequestParam String cityName) {
+    public ResponseEntity getCitys(@RequestParam String q) {
         try {
-            return ResponseEntity.ok(cityService.findAll(cityName));
+            return ResponseEntity.ok(cityService.findAll(q));
         }// catch (CityNotFoundException e) {
 //            return ResponseEntity.badRequest().body(e.getMessage());
 //        }
@@ -39,8 +39,4 @@ public class CityController {
             return ResponseEntity.badRequest().body("Произошла ошибка");
         }
     }
-
-
-
-
 }
