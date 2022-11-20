@@ -19,12 +19,7 @@ public class CityScored {
         return model;
     }
 
-    public static final Comparator<CityScored> COMPARE_BY_SCORE = new Comparator<CityScored>() {
-        @Override
-        public int compare(CityScored lhs, CityScored rhs) {
-            return (int) (rhs.getScore() - lhs.getScore());
-        }
-    };
+    public static final Comparator<CityScored> COMPARE_BY_SCORE = (lhs, rhs) -> (int) (rhs.getScore() - lhs.getScore());
 
     public CityScored() {
     }

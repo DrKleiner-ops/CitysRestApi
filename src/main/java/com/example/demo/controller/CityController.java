@@ -29,9 +29,9 @@ public class CityController {
         }
     }
     @GetMapping
-    public ResponseEntity getCitys(@RequestParam String q) {
+    public ResponseEntity getCitys(@RequestParam String q, @RequestParam String latitude, @RequestParam String longitude) {
         try {
-            return ResponseEntity.ok(cityService.findAll(q));
+            return ResponseEntity.ok(cityService.findAll(q,latitude,longitude));
         }// catch (CityNotFoundException e) {
 //            return ResponseEntity.badRequest().body(e.getMessage());
 //        }
