@@ -2,26 +2,22 @@ package com.example.demo.model;
 
 import com.example.demo.entity.CityEntity;
 
-import java.util.Comparator;
-
 public class CityScored {
     private String cityName;
     private double latitude;
     private double longitude;
     private double score;
 
-    public static CityScored toModel(CityEntity entity, double score){
+    public CityScored() {
+    }
+
+    public static CityScored toModel(CityEntity entity, double score) {
         CityScored model = new CityScored();
         model.setCityName(entity.getCityName());
         model.setLatitude(entity.getLatitude());
         model.setLongitude(entity.getLongitude());
         model.setScore(score);
         return model;
-    }
-
-    public static final Comparator<CityScored> COMPARE_BY_SCORE = (lhs, rhs) -> (int) (rhs.getScore() - lhs.getScore());
-
-    public CityScored() {
     }
 
     public String getCityName() {
@@ -55,9 +51,6 @@ public class CityScored {
     public void setScore(double score) {
         this.score = score;
     }
-
-
-
 
 
 }

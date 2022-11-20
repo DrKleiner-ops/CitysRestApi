@@ -1,7 +1,5 @@
 package com.example.demo.entity;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-
 import javax.persistence.*;
 
 @Entity
@@ -50,7 +48,6 @@ public class CityEntity {
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
-
 
 
 }

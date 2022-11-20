@@ -1,21 +1,10 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.CityEntity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class CityServiceTest {
 
-    @Test
-    void parse() {
-        var test = new CityService();
-        String s ="q=Londo&latitude=43.70011&longitude=-79.4163";
-        String[] strings = {"Londo","43.70011","-79.4163"};
-        Assertions.assertArrayEquals(strings,test.parse(s));
-
-    }
 
     @Test
     void toScored() {

@@ -2,8 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.CityEntity;
 import com.example.demo.exception.CityAlreadyExistException;
-import com.example.demo.exception.CityNotFoundException;
-import com.example.demo.repository.CityRepo;
 import com.example.demo.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,21 +15,21 @@ public class CityController {
     private CityService cityService;
 
     @PostMapping
-    private ResponseEntity addCity(@RequestBody CityEntity city){
-        try{
+    private ResponseEntity addCity(@RequestBody CityEntity city) {
+        try {
             cityService.addCity(city);
             return ResponseEntity.ok("Город успешно сохранен");
-        }catch (CityAlreadyExistException e) {
+        } catch (CityAlreadyExistException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body("Произошла ошибка");
         }
     }
+
     @GetMapping
-    public ResponseEntity getCitys(@RequestParam String q, @RequestParam String latitude, @RequestParam String longitude) {
+    public ResponseEntity getCities(@RequestParam String q, @RequestParam String latitude, @RequestParam String longitude) {
         try {
-            return ResponseEntity.ok(cityService.findAll(q,latitude,longitude));
+            return ResponseEntity.ok(cityService.findAll(q, latitude, longitude));
         }// catch (CityNotFoundException e) {
 //            return ResponseEntity.badRequest().body(e.getMessage());
 //        }
