@@ -4,6 +4,7 @@ package com.example.demo.service;
 import com.example.demo.entity.CityEntity;
 import com.example.demo.exception.CityAlreadyExistException;
 import com.example.demo.exception.CityNotFoundException;
+import com.example.demo.exception.WrongRangeParamsException;
 import com.example.demo.model.CityScored;
 import com.example.demo.repository.CityRepo;
 import com.example.demo.repository.CityRepoList;
@@ -21,7 +22,7 @@ public class CityService {
     @Autowired
     private CityRepoList cityRepoList;
 
-
+    @Deprecated
     public CityEntity addCity(CityEntity city) throws CityAlreadyExistException {
         if (cityRepo.findByCityName(city.getCityName()) != null) {
             throw new CityAlreadyExistException("Город с таким названием уже существует");
@@ -39,8 +40,10 @@ public class CityService {
         return city;
     }
 
-    public List<CityScored> findAll(String q, String latitude, String longitude) {
+    public List<CityScored> findAll(String q, String latitude, String longitude) throws CityNotFoundException, WrongRangeParamsException {
+
         List<CityEntity> list = cityRepoList.findAllByCityNameContaining(q);
+        inputCheck(q, latitude, longitude);
         return toScored(list, latitude, longitude);
     }
 
@@ -57,12 +60,19 @@ public class CityService {
         double score, longSum;
         double cityLat = city.getLatitude();//широта
         double cityLong = city.getLongitude();//долгота
-        double reqLatitude = Double.parseDouble(latitude);
-        double reqLongitude = Double.parseDouble(longitude);
-        longSum = Math.abs(reqLongitude - cityLong);
+        longSum = Math.abs(Double.parseDouble(longitude) - cityLong);
         if (longSum > 180) longSum = 360 - longSum;
-        score = (360 - (Math.abs(reqLatitude - cityLat) + longSum)) / 360;
+        score = (360 - (Math.abs(Double.parseDouble(latitude) - cityLat) + longSum)) / 360;
         double scale = Math.pow(10, 1);
         return Math.ceil(score * scale) / scale;
+    }
+
+    public void inputCheck(String q, String latitude, String longitude) throws WrongRangeParamsException, CityNotFoundException {
+        if (Double.parseDouble(latitude) < -90 | Double.parseDouble(latitude) > 90 | Double.parseDouble(longitude) < -180 | Double.parseDouble(longitude) > 180) {
+            throw new WrongRangeParamsException("Невозможные значения широты и/или долготы");
+        }
+        if (cityRepoList.findAllByCityNameContaining(q).isEmpty()) {
+            throw new CityNotFoundException("Город не был найден");
+        }
     }
 }

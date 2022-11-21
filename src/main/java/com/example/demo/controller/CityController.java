@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.CityEntity;
 import com.example.demo.exception.CityAlreadyExistException;
+import com.example.demo.exception.CityNotFoundException;
+import com.example.demo.exception.WrongRangeParamsException;
 import com.example.demo.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,10 +32,9 @@ public class CityController {
     public ResponseEntity getCities(@RequestParam String q, @RequestParam String latitude, @RequestParam String longitude) {
         try {
             return ResponseEntity.ok(cityService.findAll(q, latitude, longitude));
-        }// catch (CityNotFoundException e) {
-//            return ResponseEntity.badRequest().body(e.getMessage());
-//        }
-        catch (Exception e) {
+        } catch (WrongRangeParamsException | CityNotFoundException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body("Произошла ошибка");
         }
     }
